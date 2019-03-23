@@ -1,7 +1,7 @@
 # TensorMap-Proto
 Prototype for project TensorMap
 
-backend,
+Setting-up backend,
 
 ```
 pip install -r requirements.txt
