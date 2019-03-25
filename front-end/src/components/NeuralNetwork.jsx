@@ -142,7 +142,6 @@ class NeuralNetwork extends React.Component {
     }
 
     render(){
-        console.log(this.state);
         const { classes } = this.props;
         return (
             <React.Fragment>
@@ -244,7 +243,7 @@ class NeuralNetwork extends React.Component {
                         <Grid item key='Output' xs={2}>
                             <Card>
                                 <CardHeader
-                                    title='Test Accuracy'
+                                    title='Model Accuracy'
                                     titleTypographyProps={{ align: 'center' }}
                                     subheaderTypographyProps={{ align: 'center' }}
                                     className={classes.cardHeader}

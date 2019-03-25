@@ -24,9 +24,12 @@ class ParameterPanel extends React.Component{
         this.setState({ [name]: event.target.value });
     };
 
+
     handleProcess(event){
 
         let props = this.props;
+        let state = this.state;
+
         props.updateProcessingState(true);
 
         const config = {
@@ -35,18 +38,50 @@ class ParameterPanel extends React.Component{
             },
         };
 
+        // console.log(Object.values(axios.post('http://localhost:5000/process', this.state, config).then((res)=>{props.updateTestAccuracy(res.data); props.updateProcessingState(false);})));
+
         axios.post('http://localhost:5000/process', this.state, config)
             .then(function (response) {
-                props.updateTestAccuracy(response.data);
-                props.updateProcessingState(false);
+                var i = setInterval(function(){
+                    let responseEpochs = 0;
+                    axios.get('http://localhost:5000/process/'+response.data)
+                        .then(res => {
+                            props.updateTestAccuracy(res.data.testAccuracy);
+                            props.updateProcessingState(false);
+                            responseEpochs = res.data.epoch
+                            console.log(responseEpochs)
+                        });
+
+                    if(state.epochs - 1 === responseEpochs) {
+                        clearInterval(i);
+                    }
+                }, 500);
             })
             .catch(function (error) {
                 console.log(error);
             });
+
+
+
+        // axios.get('http://localhost:5000/')
+        //     .then(function (res) {
+        //         console.log((axios.post('http://localhost:5000/process', this.state, config)));
+        //         for(let i=0; i<100; i++){
+        //             axios.get('http://localhost:5000/progress/'+res.data)
+        //                 .then(function (response) {
+        //                     console.log(response.data);
+        //                     props.updateTestAccuracy(response.data);
+        //                     props.updateProcessingState(false);
+        //                 })
+        //         }
+        //
+        //
+        //     });
     }
 
 
     render(){
+
         const { classes } = this.props;
 
         return(
