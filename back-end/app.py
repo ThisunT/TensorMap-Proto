@@ -2,23 +2,8 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS
 import random
-import threading
-import time
 import nn
 import json
-
-
-class ExportingThread(threading.Thread):
-    def __init__(self):
-        self.progress = 0
-        super().__init__()
-
-    def run(self):
-        # Your exporting stuff goes here ...
-        print("a")
-        for _ in range(10):
-            time.sleep(0.2)
-            self.progress += 5
 
 exporting_threads = {}
 
